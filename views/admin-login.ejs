@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h2 class="display">دخول لوحة التحكم</h2>
+    <p class="sub">خاص بمالك الموقع فقط</p>
+
+    <form method="POST" action="/admin/login" style="margin-top:24px;">
+      <div class="field">
+        <label>اسم المستخدم</label>
+        <input type="text" name="username" required autocomplete="off" />
+      </div>
+      <div class="field">
+        <label>كلمة السر</label>
+        <input type="password" name="password" required />
+      </div>
+      <button type="submit" class="btn btn-gold">دخول</button>
+    </form>
+
+    <% if (error) { %><div class="error-msg"><%= error %></div><% } %>
+  </div>
+</div>
+
+ <%- include('partials/footer') %>

@@ -1,0 +1,59 @@
+<%- include('partials/header') %>
+
+<section class="admin-shell">
+  <div class="admin-form">
+    <h3 class="display"><%= editPlace ? "تعديل مكان" : "إضافة مكان جديد" %></h3>
+    <p style="color:var(--ink-soft); font-size:.85rem;">
+      <%= editPlace ? "عدّل البيانات واحفظ" : "عبّي البيانات ثم اضغط حفظ" %>
+    </p>
+
+    <form method="POST" action="<%= editPlace ? '/admin/places/' + editPlace._id + '/update' : '/admin/places' %>" style="margin-top:18px;">
+      <div class="field">
+        <label>الاسم</label>
+        <input type="text" name="name" required value="<%= editPlace ? editPlace.name : '' %>" />
+      </div>
+      <div class="field">
+        <label>التصنيف</label>
+        <input type="text" name="category" placeholder="مطعم، حديقة، مقهى..." value="<%= editPlace ? editPlace.category : '' %>" />
+      </div>
+      <div class="field">
+        <label>العنوان</label>
+        <input type="text" name="address" value="<%= editPlace ? editPlace.address : '' %>" />
+      </div>
+      <div class="field">
+        <label>رابط صورة (اختياري)</label>
+        <input type="text" name="image" value="<%= editPlace ? editPlace.image : '' %>" />
+      </div>
+      <div class="field">
+        <label>الوصف</label>
+        <textarea name="description"><%= editPlace ? editPlace.description : '' %></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%; margin-top:18px;">
+        <%= editPlace ? "حفظ التعديلات" : "إضافة المكان" %>
+      </button>
+      <% if (editPlace) { %>
+        <a href="/admin/panel" class="btn btn-ghost" style="width:100%; margin-top:10px; text-align:center; display:block;">إلغاء</a>
+      <% } %>
+    </form>
+  </div>
+
+  <div>
+    <h3 class="display" style="margin-bottom:18px;">كل الأماكن (<%= places.length %>)</h3>
+    <% places.forEach(function(p){ %>
+      <div class="admin-list-item">
+        <div class="info">
+          <h4><%= p.name %> <span style="color:var(--gold); font-size:.85rem;">★ <%= p.averageRating || "-" %></span></h4>
+          <p><%= p.category %> · <%= p.address %></p>
+        </div>
+        <div class="admin-actions">
+          <a href="/admin/places/<%= p._id %>/edit" class="btn btn-ghost small-btn">تعديل</a>
+          <form action="/admin/places/<%= p._id %>/delete" method="POST" onsubmit="return confirm('متأكد من الحذف؟')">
+            <button type="submit" class="btn btn-danger small-btn">حذف</button>
+          </form>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</section>
+
+ <%- include('partials/footer') %>

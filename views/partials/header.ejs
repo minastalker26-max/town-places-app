@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof pageTitle !== "undefined" ? pageTitle : "أماكن مدينتي" %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand"><span class="pin"></span> أماكن مدينتي</a>
+    <div class="nav-links">
+      <a href="/"><span class="label">الرئيسية</span></a>
+      <% if (locals.isLoggedIn) { %>
+        <a href="/logout">تسجيل خروج</a>
+      <% } else { %>
+        <a href="/login">تسجيل دخول</a>
+        <a href="/signup" class="btn btn-primary">إنشاء حساب</a>
+      <% } %>
+      <% if (locals.isAdmin) { %>
+        <a href="/admin/panel" class="btn btn-gold">لوحة التحكم</a>
+      <% } %>
+    </div>
+  </nav>

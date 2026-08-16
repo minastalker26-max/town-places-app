@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h2 class="display">إنشاء حساب</h2>
+    <p class="sub">للتقييم والمشاركة في الموقع</p>
+
+    <div class="social-row" style="margin-top:24px;">
+      <a href="/auth/google" class="social-btn google">تسجيل عبر Google</a>
+      <a href="/auth/facebook" class="social-btn facebook">تسجيل عبر Facebook</a>
+    </div>
+
+    <div class="divider">أو</div>
+
+    <form method="POST" action="/signup">
+      <div class="field">
+        <label>اسم المستخدم (اختياري إذا رح تستخدم رقم الهاتف)</label>
+        <input type="text" name="username" placeholder="مثال: ahmed_22" />
+      </div>
+      <div class="field">
+        <label>رقم الهاتف (اختياري إذا عبّيت يوزرنيم)</label>
+        <input type="tel" name="phone" placeholder="07xxxxxxxxx" />
+      </div>
+      <div class="field">
+        <label>كلمة السر</label>
+        <input type="password" name="password" required minlength="6" />
+      </div>
+      <button type="submit" class="btn btn-primary">إنشاء الحساب</button>
+    </form>
+
+    <% if (error) { %><div class="error-msg"><%= error %></div><% } %>
+
+    <p class="switch-line">عندك حساب؟ <a href="/login">سجّل دخول</a></p>
+  </div>
+</div>
+
+ <%- include('partials/footer') %>

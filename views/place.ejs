@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<section class="section" style="padding-top:50px; max-width:760px;">
+  <div class="card" style="animation:none; opacity:1; transform:none;">
+    <div class="card-media" style="height:260px;">
+      <% if (place.image) { %>
+        <img src="<%= place.image %>" alt="<%= place.name %>" />
+      <% } else { %>
+        <div class="fallback"><%= place.name.charAt(0) %></div>
+      <% } %>
+      <div class="rating-badge">★ <%= place.averageRating || "جديد" %></div>
+    </div>
+    <div class="card-body">
+      <div class="category"><%= place.category %></div>
+      <h2 style="margin-top:6px;"><%= place.name %></h2>
+      <p style="-webkit-line-clamp:unset;"><%= place.description %></p>
+      <div class="address">📍 <%= place.address %></div>
+
+      <hr style="border:none; border-top:1px solid var(--line); margin:26px 0;" />
+
+      <h3 style="font-size:1.1rem;">التقييمات (<%= place.ratings.length %>)</h3>
+      <% place.ratings.slice().reverse().forEach(function(r){ %>
+        <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+          <div class="stars"><%= "★".repeat(r.stars) + "☆".repeat(5 - r.stars) %></div>
+          <p style="margin:6px 0 0; color:var(--ink-soft); font-size:.9rem;"><%= r.comment || "" %></p>
+          <p style="margin:2px 0 0; font-size:.78rem; color:var(--ink-soft);">— <%= r.user?.displayName || r.user?.username || "مستخدم" %></p>
+        </div>
+      <% }); %>
+
+      <% if (locals.isLoggedIn) { %>
+        <form class="star-form" action="/place/<%= place._id %>/rate" method="POST">
+          <select name="stars" required>
+            <option value="">قيّم من 1 إلى 5</option>
+            <option value="5">5 ★★★★★</option>
+            <option value="4">4 ★★★★</option>
+            <option value="3">3 ★★★</option>
+            <option value="2">2 ★★</option>
+            <option value="1">1 ★</option>
+          </select>
+          <input type="text" name="comment" placeholder="تعليق (اختياري)" style="flex:1; padding:8px 12px; border-radius:10px; border:1.5px solid var(--line); font-family:inherit;" />
+          <button type="submit" class="btn btn-primary small-btn">إرسال</button>
+        </form>
+      <% } else { %>
+        <p style="margin-top:16px; color:var(--ink-soft);">
+          <a href="/login" style="color:var(--teal); font-weight:700;">سجّل دخولك</a> عشان تقدر تقيّم هذا المكان.
+        </p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+ <%- include('partials/footer') %>
